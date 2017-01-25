@@ -1,39 +1,74 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TextInput } from 'react-native';
+import { Text, TextInput } from 'react-native';
 
-export default class SignIn extends Component {
+import { Button, Card, CardSelection, Input } from '../common';
+
+
+// export default class SignIn extends Component {
+class Signin extends Component {
+  state = { email: '', password: '' };
+
   render(){
     return(
-      <View style={styles.container}>
-        <Text>Sign In </Text>
-        <Text style={styles.label}>Username:</Text>
-        <TextInput style={styles.input}/>
-        <Text style={styles.label}>Password:</Text>
-        <TextInput secureTextEntry={true} style={styles.input}/>
-      </View>
+      <Card>
+        <CardSelection>
+          <Input 
+            label="Email"
+            placeholder="user@gmail.com"
+            value={this.state.email}
+            onChangeText={(email) => this.setState({email})}
+          />
+        </CardSelection>
+      
+          <TextInput 
+            secureTextEntry={true} 
+            value={this.state.password}
+            onChangeText={(text) => this.setState({password: text})}
+          />
+        <CardSelection>
+          <Button 
+            text='Sign In'
+            onPress={this.onPress} 
+          />
+        </CardSelection>
+
+      </Card>
     );
+  }
+  // onPress = () => {
+  //   this.setState({
+  //     username: '',
+  //     password: ''
+  //   });
+  // };
+
+  onPress () {
+    const { email, password } = this.state;
   }
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
 
-  input: {
-    padding: 4,
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    borderRadius: 5,
-    margin: 5,
-    width: 200,
-    alignSelf: 'center'
-  },
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center'
+//   },
 
-  label: {
-    fontSize: 18
-  }
-});
+//   input: {
+//     padding: 4,
+//     height: 40,
+//     borderColor: 'gray',
+//     borderWidth: 1,
+//     borderRadius: 5,
+//     margin: 5,
+//     width: 200,
+//     alignSelf: 'center'
+//   },
+
+//   label: {
+//     fontSize: 18
+//   }
+// });
+
+export { Signin };

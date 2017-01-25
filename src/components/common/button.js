@@ -1,32 +1,43 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, TouchableHighlight } from 'react-native';
+import { Text, StyleSheet, TouchableHighlight} from 'react-native';
 
-export default class Button extends Component {
-  render(){
+class Button extends Component {
+ // const Button = (props) => {
+
+
+// const Button = ({onPress, props}) => {
+   render(){
+ 
+
     return(
       <TouchableHighlight style={styles.button}
         underlayColor={'gray'}
         onPress={this.props.onPress}
+        //onPress={this.props.onPress}
+
       >
         <Text style={styles.buttonText}>{this.props.text}</Text>
       </TouchableHighlight>
     );
-  }
+   }
 };
 
 const styles = StyleSheet.create({
   button: {
-    justifyContent: 'center',
-    alignItems: 1,
+    // justifyContent: 'center',
+    // alignSelf: 'stretch',
     borderWidth: 1,
     borderRadius: 5,
     padding: 5,
     borderColor: 'black',
-    marginTop: 10
+    marginTop: 10,
+    flex: 1
   },
   buttonText: {
-    flex: 1,
+    // flex: 1,
     alignSelf: 'center',
     fontSize: 20
   }
 });
+
+export { Button };
