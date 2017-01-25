@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, TextInput } from 'react-native';
+// import { Text, TextInput } from 'react-native';
 
 import { Button, Card, CardSelection, Input } from '../common';
 
@@ -19,12 +19,16 @@ class Signin extends Component {
             onChangeText={(email) => this.setState({email})}
           />
         </CardSelection>
-      
-          <TextInput 
-            secureTextEntry={true} 
+
+        <CardSelection>
+          <Input 
+            label="Password"
             value={this.state.password}
-            onChangeText={(text) => this.setState({password: text})}
+            onChangeText={(password) => this.setState({password})}
+            secureTextEntry={true}
           />
+        </CardSelection>
+
         <CardSelection>
           <Button 
             text='Sign In'
@@ -34,6 +38,7 @@ class Signin extends Component {
 
       </Card>
     );
+
   }
   // onPress = () => {
   //   this.setState({
