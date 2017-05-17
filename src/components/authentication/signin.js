@@ -1,20 +1,65 @@
 import React, { Component } from 'react';
-// import { Text, TextInput } from 'react-native';
+import { Text, View } from 'react-native';
+import firebase from 'firebase';
 
-import { Button, Card, CardSelection, Input } from '../common';
+import { Button, Header, Card, CardSelection, Input, Spinner } from '../common';
 
 
-// export default class SignIn extends Component {
 class Signin extends Component {
-  state = { email: '', password: '' };
+  state = { email: '', password: '', error: '', loading: false };
+
+  onButtonPress(){
+    const { email, password } = this.state;
+
+    this.setState({ error: '', loading: true});
+
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .then(this.onLoginSuccess.bind(this))
+      .catch(() => {
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then(this.onLoginSuccess.bind(this))
+        .catch(this.onLoginFail.bind(this))
+      });
+  }
+
+  onLoginFail() {
+    this.setState({
+      error: 'Nope! Try again.',
+      loading: false
+    })
+  }
+
+  onLoginSuccess() {
+    this.setState({
+      email: '',
+      password: '',
+      loading: false,
+      error: ''
+    });
+  }
+
+  renderButton() {
+    if (this.state.loading) {
+      return <Spinner size="small" />;
+    }
+
+    return (
+      <Button 
+        text='Sign In'
+        onPress={this.onButtonPress.bind(this)} 
+      />
+
+    );
+  }
 
   render(){
     return(
-      <Card>
+      <Card>    
+
         <CardSelection>
           <Input 
             label="Email"
-            placeholder="user@gmail.com"
+            placeholder="user@example.com"
             value={this.state.email}
             onChangeText={(email) => this.setState({email})}
           />
@@ -23,57 +68,34 @@ class Signin extends Component {
         <CardSelection>
           <Input 
             label="Password"
+            placeholder="password"
             value={this.state.password}
             onChangeText={(password) => this.setState({password})}
-            secureTextEntry={true}
+            secureTextEntry
           />
         </CardSelection>
 
+        <Text style={styles.errorTextStyle}>
+          {this.state.error}
+        </Text>
+
         <CardSelection>
-          <Button 
-            text='Sign In'
-            onPress={this.onPress} 
-          />
+          {this.renderButton()}
         </CardSelection>
 
       </Card>
     );
 
   }
-  // onPress = () => {
-  //   this.setState({
-  //     username: '',
-  //     password: ''
-  //   });
-  // };
+};
 
-  onPress () {
-    const { email, password } = this.state;
+const styles = {
+  errorTextStyle: {
+    fontSize: 20,
+    alignSelf: 'center',
+    color: 'red'
   }
 };
 
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center'
-//   },
-
-//   input: {
-//     padding: 4,
-//     height: 40,
-//     borderColor: 'gray',
-//     borderWidth: 1,
-//     borderRadius: 5,
-//     margin: 5,
-//     width: 200,
-//     alignSelf: 'center'
-//   },
-
-//   label: {
-//     fontSize: 18
-//   }
-// });
 
 export { Signin };
