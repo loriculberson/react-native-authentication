@@ -20,7 +20,7 @@ class Button extends Component {
 const styles = StyleSheet.create({
   button: {
     // justifyContent: 'center',
-    // alignSelf: 'stretch',
+    alignSelf: 'stretch',
     borderWidth: 1,
     borderRadius: 5,
     padding: 5,

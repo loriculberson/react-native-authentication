@@ -48,7 +48,6 @@ class Signin extends Component {
         text='Sign In'
         onPress={this.onButtonPress.bind(this)} 
       />
-
     );
   }
 

@@ -4,12 +4,12 @@ import {
   Text
 } from 'react-native';
 import firebase from 'firebase';
-import { Button } from './components/common';
+import { Button, Card, CardSelection, Spinner } from './components/common';
 import { Signin } from './components/authentication/signin';
 
 
 class Authentication extends Component {
-  state = { loggedIn: false };
+  state = { loggedIn: null };
 
   componentWillMount() {
     firebase.initializeApp({
@@ -29,45 +29,33 @@ class Authentication extends Component {
     });
   }
 
-  renderButton() {
-    if (this.state.loggedIn) {
-      // return <Spinner size="small" />;
-      return (
-        <Button 
-          text='Sign Out'
-          // onPress={this.onButtonPress.bind(this)} 
-        />
-      );
+  renderContent() {
+
+    switch (this.state.loggedIn) {
+      case true:
+        return (
+          <CardSelection>
+            <Button 
+              text='Sign Out!!!'
+            />
+          </CardSelection>
+        );
+
+      case false:
+        return  <Signin/>;
+
+      default:
+        return <Spinner size="large" />;
+
     }
-
-    return (
-      <Button 
-        text='Sign In'
-        // onPress={this.onButtonPress.bind(this)} 
-      />
-
-    );
-  }
-
-  renderProperButton() {
-    if (this.state.loggedIn) {
-      return (
-        <Button 
-          text='Sign Out'
-        />
-      );
-    }
-
-    return  <Signin/>;
   }
 
   render(){
-    return (
-      {this.renderButton()}
+    return(
+      this.renderContent()
     );
   }
 };
-
 
 
 export default Authentication;
