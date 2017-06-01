@@ -37,6 +37,7 @@ class Authentication extends Component {
           <CardSelection>
             <Button 
               text='Sign Out!!!'
+              onPress={() => firebase.auth().signOut()}
             />
           </CardSelection>
         );
